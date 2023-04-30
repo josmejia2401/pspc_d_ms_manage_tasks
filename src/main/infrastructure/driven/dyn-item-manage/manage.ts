@@ -16,4 +16,9 @@ export interface ItemManage {
         segment?: number;
         limit?: number;
     }): Promise<ScanTransactionResponse>;
+    getByUserIdAndProjectIdAndUsersStory(userId: string, projectId: string, usersStoryId: string, options?: {
+        lastEvaluatedKey?: string;
+        segment?: number;
+        limit?: number;
+    }): Promise<ScanTransactionResponse>;
 }

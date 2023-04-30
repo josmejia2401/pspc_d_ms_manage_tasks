@@ -5,7 +5,7 @@ export function getItemAllAdapter(): Fn {
     return async (event: HttpRequestEvent, d: any, options: OptionsHttp): Promise<HttpResponseEvent> => {
         const { logger } = d;
         try {
-            const output = await new GetItemAllUseCase(logger).execute(event.query.projectId, {
+            const output = await new GetItemAllUseCase(logger).execute(event.query.projectId, event.query.usersStoryId, {
                 lastEvaluatedKey: event.query.lastEvaluatedKey,
                 segment: Number(event.query.segment || 0),
                 limit: Number(event.query.limit || 0),

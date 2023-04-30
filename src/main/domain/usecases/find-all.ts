@@ -12,16 +12,18 @@ export class GetItemAllUseCase {
         this.itemManage = new ItemManageImpl(logger);
     }
 
-    async execute(projectId: string, filter: {
+    async execute(projectId: string, usersStoryId: string, filter: {
         lastEvaluatedKey?: string;
         segment?: number;
         limit?: number;
     }, options: OptionsHttp) {
         try {
-            if (Utils.isEmpty(projectId)) {
-                return await this.itemManage.getByUserId(options.decodedToken!.sub!, filter);
-            } else {
+            if (!Utils.isEmpty(projectId) && !Utils.isEmpty(usersStoryId)) {
+                return await this.itemManage.getByUserIdAndProjectIdAndUsersStory(options.decodedToken!.sub!, projectId, usersStoryId, filter);
+            } else if (!Utils.isEmpty(projectId)) {
                 return await this.itemManage.getByUserIdAndProjectId(options.decodedToken!.sub!, projectId, filter);
+            } else {
+                return await this.itemManage.getByUserId(options.decodedToken!.sub!, filter);
             }
         } catch (error) {
             this.logger.error(error);

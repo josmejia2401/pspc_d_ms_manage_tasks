@@ -11,6 +11,7 @@ export async function getItemAllHanlder(event: any, _context: any) {
             segment: Joi.number().optional(),
             limit: Joi.number().optional(),
             projectId: Joi.string().optional(),
+            usersStoryId: Joi.string().optional(),
         }).required(),
     });
 }

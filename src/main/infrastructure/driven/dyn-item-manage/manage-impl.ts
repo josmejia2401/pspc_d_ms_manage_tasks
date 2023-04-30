@@ -212,6 +212,53 @@ export class ItemManageImpl implements ItemManage {
         }
     }
 
+    async getByUserIdAndProjectIdAndUsersStory(userId: string, projectId: string, usersStoryId: string, options?: {
+        lastEvaluatedKey?: string;
+        segment?: number;
+        limit?: number;
+    }): Promise<ScanTransactionResponse> {
+        try {
+            const limit = options?.limit || 25;
+            const params: ScanCommandInput = {
+                TableName: Constants.AWS_DYNAMODB.DYNDB_TASKS_TBL,
+                FilterExpression: "#userId=:userId AND #projectId=:projectId AND #usersStoryId=:usersStoryId",
+                ExpressionAttributeValues: {
+                    ":userId": {
+                        "S": `${userId}`
+                    },
+                    ":projectId": {
+                        "S": `${projectId}`
+                    },
+                    ":usersStoryId": {
+                        "S": `${usersStoryId}`
+                    }
+                },
+                ExpressionAttributeNames: {
+                    "#userId": "userId",
+                    "#projectId": "projectId",
+                    "#usersStoryId": "usersStoryId"
+                },
+                Limit: limit,
+            };
+            let lastEvaluatedKey: any;
+            if (!Utils.isEmpty(options?.lastEvaluatedKey)) {
+                lastEvaluatedKey = {
+                    "id": {
+                        "S": options?.lastEvaluatedKey
+                    }
+                }
+            }
+            const result = await this.scanBySegment(params, { limit, lastEvaluatedKey, segment: options?.segment });
+            if (!Utils.isEmpty(result.lastEvaluatedKey)) {
+                result.lastEvaluatedKey = result.lastEvaluatedKey.id.S;
+            }
+            return result;
+        } catch (error) {
+            this.logger.error(error);
+            throw error;
+        }
+    }
+
     private async scanBySegment(params: ScanCommandInput, options?: { limit?: number; segment?: number; lastEvaluatedKey?: any }): Promise<ScanTransactionResponse> {
         let lastEvaluatedKey: any;
         const results: any[] = [];
