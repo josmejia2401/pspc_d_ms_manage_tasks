@@ -5,7 +5,11 @@ export interface ItemDTO {
     usersStoryId?: string;
     name: string;
     description: string;
-    status?: number;
+    priorityId?: number;
+    phaseId?: number;
+    estimatedTime: number;
+    actualTime: number;
+    statusId?: number;
     startedAt?: string;
     completedAt?: string;
     createdAt?: string;

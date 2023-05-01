@@ -9,7 +9,11 @@ export async function updateItemHandler(event: any, _context: any) {
         bodySchema: Joi.object({
             description: Joi.string().required(),
             name: Joi.string().required(),
-            status: Joi.number().optional(),
+            statusId: Joi.number().optional(),
+            priorityId: Joi.number().optional(),
+            phaseId: Joi.number().optional(),
+            estimatedTime: Joi.number().required(),
+            actualTime: Joi.number().required(),
             startedAt: Joi.date().optional(),
             completedAt: Joi.date().optional(),
         }).required(),

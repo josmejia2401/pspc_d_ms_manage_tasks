@@ -44,23 +44,23 @@ export class ItemManageImpl implements ItemManage {
         }
     }
 
-    async getByIdAndStatus(id: string, status: number): Promise<ItemDTO> {
+    async getByIdAndStatus(id: string, statusId: number): Promise<ItemDTO> {
         try {
             const params = {
                 TableName: Constants.AWS_DYNAMODB.DYNDB_TASKS_TBL,
                 KeyConditionExpression: "#id=:id",
-                FilterExpression: "#status=:status",
+                FilterExpression: "#statusId=:statusId",
                 ExpressionAttributeValues: {
                     ":id": {
                         "S": `${id}`
                     },
-                    ":status": {
-                        "N": `${status}`
+                    ":statusId": {
+                        "N": `${statusId}`
                     }
                 },
                 ExpressionAttributeNames: {
                     "#id": "id",
-                    "#status": "status"
+                    "#statusId": "statusId"
                 },
             };
             const result: any = await this.connection.send(new QueryCommand(params));

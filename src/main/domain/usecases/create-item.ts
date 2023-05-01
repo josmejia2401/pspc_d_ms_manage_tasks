@@ -20,8 +20,8 @@ export class CreateItemUseCase {
         try {
             input.createdAt = new Date().toISOString();
             input.id = uuidv4();
-            if (Utils.isEmpty(input.status)) {
-                input.status = Constants.STATUS_USER.ACTIVE;
+            if (Utils.isEmpty(input.statusId)) {
+                input.statusId = Constants.STATUS_USER.ACTIVE;
             }
             input.userId = options.decodedToken!.sub!;
             await this.itemManage.create(input);
