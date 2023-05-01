@@ -10,9 +10,13 @@ export function createItemAdapter(): Fn {
                 name: event.body.name,
                 startedAt: event.body.startedAt || "",
                 completedAt: event.body.completedAt || "",
-                status: event.body.status,
+                statusId: event.body.statusId,
                 projectId: event.body.projectId,
                 usersStoryId: event.body.usersStoryId,
+                actualTime: Number(event.body.actualTime),
+                estimatedTime: Number(event.body.estimatedTime),
+                phaseId: Number(event.body.phaseId),
+                priorityId: Number(event.body.priorityId),
             }, options);
             return {
                 "headers": {},

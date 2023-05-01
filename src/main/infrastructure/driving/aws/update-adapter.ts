@@ -8,9 +8,13 @@ export function updateItemAdapter(): Fn {
             const output = await new UpdateItemUseCase(logger).execute(event.params.id, {
                 description: event.body.description,
                 name: event.body.name,
-                status: event.body.status,
+                statusId: Number(event.body.statusId),
                 startedAt: event.body.startedAt || "",
                 completedAt: event.body.completedAt || "",
+                actualTime: Number(event.body.actualTime),
+                estimatedTime: Number(event.body.estimatedTime),
+                phaseId: Number(event.body.phaseId),
+                priorityId: Number(event.body.priorityId),
             }, options);
             return {
                 "headers": {},
