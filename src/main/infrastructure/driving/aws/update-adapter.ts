@@ -16,7 +16,7 @@ export function updateItemAdapter(): Fn {
                 phaseId: Number(event.body.phaseId),
                 priorityId: Number(event.body.priorityId),
                 programmingLanguages: event.body.programmingLanguages,
-                technologies: event.body.priorityId,
+                technologies: event.body.technologies,
             }, options);
             return {
                 "headers": {},

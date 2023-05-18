@@ -15,10 +15,10 @@ export class GetItemByIdUseCase {
 
     async execute(id: string, options: OptionsHttp) {
         try {
-            const result: ItemDTO= await this.itemManage.getById(id, options.decodedToken!.sub!);
+            const result: ItemDTO = await this.itemManage.getById(id, options.decodedToken!.sub!);
             if (!Utils.isEmpty(result)) {
-                result.programmingLanguages = Utils.anyToJson(result.programmingLanguages);
-                result.technologies = Utils.anyToJson(result.technologies);
+                result.programmingLanguages = Utils.isEmpty(result.programmingLanguages) ? [] : Utils.anyToJson(result.programmingLanguages);
+                result.technologies = Utils.isEmpty(result.technologies) ? [] : Utils.anyToJson(result.technologies);
             }
             return result;
         } catch (error) {

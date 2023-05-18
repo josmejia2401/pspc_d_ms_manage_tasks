@@ -28,11 +28,13 @@ export class GetItemAllUseCase {
                 scanTransactionResponse = await this.itemManage.getByUserId(options.decodedToken!.sub!, filter);
             }
             if (!Utils.isEmpty(scanTransactionResponse.results)) {
-                scanTransactionResponse.results = scanTransactionResponse.results.map(p => ({
-                    ...p,
-                    programmingLanguages: Utils.anyToJson(p.programmingLanguages),
-                    technologies: Utils.anyToJson(p.technologies),
-                }));
+                scanTransactionResponse.results = scanTransactionResponse.results.map(p => {
+                    return {
+                        ...p,
+                        programmingLanguages: Utils.isEmpty(p.programmingLanguages) ? [] : Utils.anyToJson(p.programmingLanguages),
+                        technologies: Utils.isEmpty(p.technologies) ? [] : Utils.anyToJson(p.technologies),
+                    };
+                });
             }
             return scanTransactionResponse;
         } catch (error) {
