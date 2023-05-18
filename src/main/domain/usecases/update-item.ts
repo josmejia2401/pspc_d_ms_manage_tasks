@@ -15,6 +15,9 @@ export class UpdateItemUseCase {
 
     async execute(id: string, input: ItemDTO, _options: OptionsHttp) {
         try {
+            const newInput: any = input;
+            newInput.programmingLanguages = JSON.stringify(input.programmingLanguages);
+            newInput.technologies = JSON.stringify(input.technologies);
             await this.itemManage.update(id, input);
             return input;
         } catch (error) {

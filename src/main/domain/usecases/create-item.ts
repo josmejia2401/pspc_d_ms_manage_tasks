@@ -24,7 +24,10 @@ export class CreateItemUseCase {
                 input.statusId = Constants.STATUS_USER.ACTIVE;
             }
             input.userId = options.decodedToken!.sub!;
-            await this.itemManage.create(input);
+            const newInput: any = input;
+            newInput.programmingLanguages = JSON.stringify(input.programmingLanguages);
+            newInput.technologies = JSON.stringify(input.technologies);
+            await this.itemManage.create(newInput);
             return input;
         } catch (error) {
             this.logger.error(error);

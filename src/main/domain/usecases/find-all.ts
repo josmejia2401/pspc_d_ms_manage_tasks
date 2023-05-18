@@ -2,6 +2,7 @@ import { OptionsHttp } from "../../transversal/http";
 import { ItemManage } from "../../infrastructure/driven/dyn-item-manage/manage";
 import { ItemManageImpl } from "../../infrastructure/driven/dyn-item-manage/manage-impl";
 import { Utils } from "../../transversal/utilities/utils";
+import { ScanTransactionResponse } from "../models/common";
 
 export class GetItemAllUseCase {
     private logger: any;
@@ -18,13 +19,22 @@ export class GetItemAllUseCase {
         limit?: number;
     }, options: OptionsHttp) {
         try {
+            let scanTransactionResponse: ScanTransactionResponse;
             if (!Utils.isEmpty(projectId) && !Utils.isEmpty(usersStoryId)) {
-                return await this.itemManage.getByUserIdAndProjectIdAndUsersStory(options.decodedToken!.sub!, projectId, usersStoryId, filter);
+                scanTransactionResponse = await this.itemManage.getByUserIdAndProjectIdAndUsersStory(options.decodedToken!.sub!, projectId, usersStoryId, filter);
             } else if (!Utils.isEmpty(projectId)) {
-                return await this.itemManage.getByUserIdAndProjectId(options.decodedToken!.sub!, projectId, filter);
+                scanTransactionResponse = await this.itemManage.getByUserIdAndProjectId(options.decodedToken!.sub!, projectId, filter);
             } else {
-                return await this.itemManage.getByUserId(options.decodedToken!.sub!, filter);
+                scanTransactionResponse = await this.itemManage.getByUserId(options.decodedToken!.sub!, filter);
             }
+            if (!Utils.isEmpty(scanTransactionResponse.results)) {
+                scanTransactionResponse.results = scanTransactionResponse.results.map(p => ({
+                    ...p,
+                    programmingLanguages: Utils.anyToJson(p.programmingLanguages),
+                    technologies: Utils.anyToJson(p.technologies),
+                }));
+            }
+            return scanTransactionResponse;
         } catch (error) {
             this.logger.error(error);
             throw error;
