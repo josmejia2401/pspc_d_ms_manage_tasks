@@ -14,6 +14,8 @@ export async function updateItemHandler(event: any, _context: any) {
             phaseId: Joi.number().optional(),
             estimatedTime: Joi.number().required(),
             actualTime: Joi.number().required(),
+            programmingLanguages: Joi.array().items(Joi.string()),
+            technologies: Joi.array().items(Joi.string()),
             startedAt: Joi.date().optional(),
             completedAt: Joi.date().optional(),
         }).required(),
