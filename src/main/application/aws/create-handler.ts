@@ -14,6 +14,8 @@ export async function createItemHandler(event: any, _context: any) {
             statusId: Joi.number().optional(),
             priorityId: Joi.number().optional(),
             phaseId: Joi.number().optional(),
+            programmingLanguages: Joi.array().items(Joi.string()),
+            technologies: Joi.array().items(Joi.string()),
             estimatedTime: Joi.number().required(),
             actualTime: Joi.number().required(),
             startedAt: Joi.date().optional(),

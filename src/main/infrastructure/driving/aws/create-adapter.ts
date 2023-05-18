@@ -13,6 +13,8 @@ export function createItemAdapter(): Fn {
                 statusId: event.body.statusId,
                 projectId: event.body.projectId,
                 usersStoryId: event.body.usersStoryId,
+                programmingLanguages: event.body.programmingLanguages,
+                technologies: event.body.technologies,
                 actualTime: Number(event.body.actualTime),
                 estimatedTime: Number(event.body.estimatedTime),
                 phaseId: Number(event.body.phaseId),

@@ -3,6 +3,8 @@ export interface ItemDTO {
     userId?: string;
     projectId?: string;
     usersStoryId?: string;
+    programmingLanguages: string[];
+    technologies: string[];
     name: string;
     description: string;
     priorityId?: number;
